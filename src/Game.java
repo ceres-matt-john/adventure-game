@@ -1,7 +1,7 @@
 import java.util.Scanner;
 //Features:
 
-// Cheat Codes
+// setTimeout function
 // Max HP variable
 // Strength Potion
 // Refactor game win to be a separate method call
@@ -9,18 +9,19 @@ import java.util.Scanner;
 
 
 public class Game {
+
     public static void main(String[] args) {
         int heroHP = 20;
         Scanner input = new Scanner(System.in);
         int killCount = 0;
         int potionCount = 2;
-
-        System.out.println("Welcome to the game!");
-        System.out.println("");
-        System.out.println("No ASCII art here, buddy.");
-        System.out.println("#R.I.P. Bootstrap");
-        System.out.println("");
-        System.out.println("What is your name, hero?");
+                    //        System.out.println("Welcome to the game!");
+                    //        System.out.println("");
+                    //        System.out.println("No ASCII art here, buddy.");
+                    //        System.out.println("#R.I.P. Bootstrap");
+                    //        System.out.println("");
+                    //        System.out.println("What is your name, hero?");
+        openingText();
         String heroName = input.nextLine();
         // Cheat Code #1 - Advance directly to Boss Battle
         if (heroName.equalsIgnoreCase("uuddlrlrba")) {
@@ -51,22 +52,19 @@ public class Game {
     }
 
     public static void runCombatRound(int heroHP, int enemyHP, Scanner input, String heroName, int killCount, int potionCount) {
-        System.out.println("");
-        System.out.println(heroName + "'s HP is: " + heroHP);
-        System.out.println("Enemy HP is: " + enemyHP);
-        System.out.println("");
-        System.out.println("What will you do?");
-        System.out.println("1. Attack | 2. Run | 3. Use Potion | 4. Check Inventory");
-        System.out.println("Enter the number for your choice: [ 1 | 2 | 3 | 4 ]");
+        menuOptions(heroName, heroHP, enemyHP);
         String userChoice = input.nextLine();
         switch(userChoice) {
+            // 1: Attack
             case "1":
                 heroAttack(heroHP, enemyHP, input, heroName, killCount, potionCount);
                 break;
+            // 2: Run
             case "2":
                 System.out.println( heroName + " couldn't escape!");
                 runCombatRound(heroHP, enemyHP, input, heroName, killCount, potionCount);
                 break;
+            // 3: Use Potion
             case "3":
                 if (potionCount == 0) {
                     System.out.println("Oh no! You're out of potions.");
@@ -81,6 +79,7 @@ public class Game {
                     enemyAttack(heroHP, enemyHP, input, heroName, killCount, potionCount);
                     break;
                 }
+            // 4. Check Inventory
             case "4":
                 System.out.println("You have " + potionCount + " potions remaining.");
                 System.out.println("");
@@ -115,11 +114,7 @@ public class Game {
                 System.out.println("You have defeated the boss!");
                 System.out.println("You win! Congrats!");
             }else if (killCount == 3){ // Initiate Boss Battle
-                System.out.println("You have defeated all the monsters!");
-                System.out.println("The villagers have been saved...");
-                System.out.println("...");
-                System.out.println("...");
-                System.out.println("...");
+                bossIntroText();
                 bossBattle(heroHP, input, heroName, killCount, potionCount);
             }else{ // Enemy killed, but have not yet reached boss battle
                 initCombat(heroHP, input, heroName, killCount, potionCount);
@@ -147,6 +142,35 @@ public class Game {
         System.out.println("Uh! Oh! Here comes the boss!");
         int bossHP = 30;
         runCombatRound(heroHP, bossHP, input, heroName, killCount, potionCount);
+    }
+
+    // Methods for large chunks of text
+
+    public static void openingText() {
+        System.out.println("Welcome to the game!");
+        System.out.println("");
+        System.out.println("No ASCII art here, buddy.");
+        System.out.println("#R.I.P. Bootstrap");
+        System.out.println("");
+        System.out.println("What is your name, hero?");
+    }
+
+    public static void menuOptions(String heroName, int heroHP, int enemyHP) {
+        System.out.println("");
+        System.out.println(heroName + "'s HP is: " + heroHP);
+        System.out.println("Enemy HP is: " + enemyHP);
+        System.out.println("");
+        System.out.println("What will you do?");
+        System.out.println("1. Attack | 2. Run | 3. Use Potion | 4. Check Inventory");
+        System.out.println("Enter the number for your choice: [ 1 | 2 | 3 | 4 ]");
+    }
+
+    public static void bossIntroText() {
+        System.out.println("You have defeated all the monsters!");
+        System.out.println("The villagers have been saved...");
+        System.out.println("...");
+        System.out.println("...");
+        System.out.println("...");
     }
 
 }
