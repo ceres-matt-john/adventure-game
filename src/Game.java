@@ -1,16 +1,16 @@
 import java.util.Scanner;
 //Features:
 
-// Inventory
 // Boss Battle
 // Cheat Codes
 // Max HP variable
+// Strength Potion
 
 
 
 public class Game {
     public static void main(String[] args) {
-        int heroHP = 20;
+        int heroHP = 40;
 
         Scanner input = new Scanner(System.in);
         int killCount = 0;
@@ -37,8 +37,8 @@ public class Game {
         System.out.println("Enemy HP is: " + enemyHP);
         System.out.println("");
         System.out.println("What will you do?");
-        System.out.println("1. Attack | 2. Run | 3. Use Potion");
-        System.out.println("Enter the number for your choice: [ 1 | 2 | 3 ]");
+        System.out.println("1. Attack | 2. Run | 3. Use Potion | 4. Check Inventory");
+        System.out.println("Enter the number for your choice: [ 1 | 2 | 3 | 4 ]");
         String userChoice = input.nextLine();
         switch(userChoice) {
             case "1":
@@ -62,6 +62,11 @@ public class Game {
                     enemyAttack(heroHP, enemyHP, input, heroName, killCount, potionCount);
                     break;
                 }
+            case "4":
+                System.out.println("You have " + potionCount + " potions remaining.");
+                System.out.println("");
+                runCombatRound(heroHP, enemyHP, input, heroName, killCount, potionCount);
+                break;
             default:
                 System.out.println("I'm sorry, I didn't understand your instructions.");
                 runCombatRound(heroHP, enemyHP, input, heroName, killCount, potionCount);
@@ -78,8 +83,16 @@ public class Game {
             System.out.println(heroName + " has defeated " + killCount + " monsters.");
             System.out.println("");
 //            Win condition kill 3 enemies. Otherwise, start a new battle.
-            if (killCount >= 3){
-                System.out.println("Congrats you win!!");
+            if(killCount == 4){
+                System.out.println("You have defeated the boss!");
+                System.out.println("You win! Congrats!");
+            }else if (killCount == 3){
+                System.out.println("You have defeated all the monsters!");
+                System.out.println("The villagers have been saved...");
+                System.out.println("...");
+                System.out.println("...");
+                System.out.println("...");
+                bossBattle(heroHP, input, heroName, killCount, potionCount);
             }else{
                 initCombat(heroHP, input, heroName, killCount, potionCount);
             }
@@ -100,6 +113,12 @@ public class Game {
 
 
         }
+    }
+
+    public static void bossBattle(int heroHP, Scanner input, String heroName, int killCount, int potionCount){
+        System.out.println("Uh! Oh! Here comes the boss!");
+        int bossHP = 30;
+        runCombatRound(heroHP, bossHP, input, heroName, killCount, potionCount);
     }
 
 }
