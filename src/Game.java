@@ -1,8 +1,6 @@
 import java.util.Scanner;
-//Features
-//Hero attacks
-//Enemy attacks
-//Custom hero name
+//Features:
+
 //Multi enemies
 //Potion
 
@@ -15,18 +13,20 @@ public class Game {
 
         System.out.println("Welcome to the game!");
         System.out.println("");
-        initCombat(heroHP, enemyHP, input);
+        System.out.println("What is your name, hero?");
+        String heroName = input.nextLine();
+        initCombat(heroHP, enemyHP, input, heroName);
 
     }
 
-    public static void initCombat(int heroHP, int enemyHP, Scanner input){
+    public static void initCombat(int heroHP, int enemyHP, Scanner input, String heroName){
         System.out.println("You encountered an enemy!");
-        runCombatRound(heroHP, enemyHP, input);
+        runCombatRound(heroHP, enemyHP, input, heroName);
     }
 
-    public static void runCombatRound(int heroHP, int enemyHP, Scanner input) {
+    public static void runCombatRound(int heroHP, int enemyHP, Scanner input, String heroName) {
         System.out.println("");
-        System.out.println("Your HP is: " + heroHP);
+        System.out.println(heroName + "'s HP is: " + heroHP);
         System.out.println("Enemy HP is: " + enemyHP);
         System.out.println("");
         System.out.println("What will you do?");
@@ -34,27 +34,41 @@ public class Game {
         String userChoice = input.nextLine();
         switch(userChoice) {
             case "1":
-                heroAttack(heroHP, enemyHP, input);
+                heroAttack(heroHP, enemyHP, input, heroName);
                 break;
             case "2":
-                System.out.println("You couldn't escape!");
-                runCombatRound(heroHP, enemyHP, input);
+                System.out.println( heroName + " couldn't escape!");
+                runCombatRound(heroHP, enemyHP, input, heroName);
                 break;
             default:
                 System.out.println("I'm sorry, I didn't understand your instructions.");
-                runCombatRound(heroHP, enemyHP, input);
+                runCombatRound(heroHP, enemyHP, input, heroName);
         }
     }
 
-    public static void heroAttack(int heroHP, int enemyHP, Scanner input){
+    public static void heroAttack(int heroHP, int enemyHP, Scanner input, String heroName){
         System.out.println("");
         int randomAttack = (int) (Math.random() * 5) + 1;
-        System.out.println("You attack enemy for " + randomAttack);
+        System.out.println( heroName + " attacks enemy for " + randomAttack);
         enemyHP -= randomAttack;
         if (enemyHP <= 0){
             System.out.println("Congrats you win!!");
         }else {
-            runCombatRound(heroHP, enemyHP, input);
+            enemyAttack(heroHP, enemyHP, input, heroName);
+
+
+        }
+    }
+
+    public static void enemyAttack(int heroHP, int enemyHP, Scanner input, String heroName){
+        System.out.println("");
+        int randomAttack = (int) (Math.random() * 3) + 1;
+        System.out.println("Enemy attacks " +  heroName + " for " + randomAttack);
+        heroHP -= randomAttack;
+        if (heroHP <= 0){
+            System.out.println(heroName + " died, game over!!");
+        }else {
+            runCombatRound(heroHP, enemyHP, input, heroName);
 //          ===Would call enemy attack method
 
         }
